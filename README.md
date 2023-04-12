@@ -63,38 +63,29 @@ Google Cloud Console > IAM & Admin > IAM > Create Service Account
 
 Click on the name of a new service account > KEYS > ADD KEY > Create new key > select JSON; a JSON key will be automatically downloaded to your device, you will need it later
 
-~~**Step 4.** Create a bucket to store a Terraform state file:~~
-
-~~Google Cloud Console > Cloud Storage > Buckets > CREATE;~~
-
-~~- Name your bucket (remember that your bucket name has to be unique across all GCP projects!)~~
-~~- Do NOT grant public access to this bucket~~
-
-**Step 5.** In your Github repository, go to Settings. 
+**Step 4.** In your Github repository, go to Settings. 
 
 Settings > Security > Actions > click `New repository secret`
 
 Paste content of your .json file and name the secret TF_GOOGLE_CREDENTIALS. Save.
 
-**Step 6.** Modify files to match names from your GCP project; e.g. in backend.tf:
+**Step 5.** Modify files to match names from your GCP project; e.g. in backend.tf:
 
 ```
 terraform {
   required_version = ">= 1.0.11"
   backend "gcs" {
     bucket = "YOUR_BUCKET_NAME_FOR_STATE_FILE"
-    prefix = "dev"
+    prefix = "terraform/state"
   }
 }
 ```
 **Step 7.** Commit and push changes to remote repository.
 
-Terraform CI/CD workflow is set up to be triggered only when a new pull request is created. Edit the original .yml file to your liking.
+*Terraform CI/CD workflow is set up to be triggered only when a new pull request is created. Edit the original .yml file if needed.*
 
-~~**Step 8.** Once a bucket to store a static website is created, go back to Google Console > Buckets > go to the newly created bucket > Click UPLOAD FILES or simply drag & drop index.html file. ~~
+**Step 8.** Go back to Google Console > Buckets > go to the newly created bucket > Click Copy URL and paste it to your browser.
 
-Note: Terraform configuration includes granting access to allUsers to make files in this bucket publically available.
+*Note: Terraform configuration includes granting access to allUsers to make files in this bucket publically available.*
 
-**Step 9.** Click Copy URL and paste it to your browser.
-
-**Step 10.** Enjoy 🎉
+**Step 9.** Enjoy 🎉
