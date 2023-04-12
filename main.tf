@@ -1,5 +1,5 @@
 resource "google_compute_instance" "dareit-vm-ci-final" {
-  name         = "dareit-vm-tf-ci"
+  name         = "dareit-vm-tf-ci-final"
   machine_type = "e2-small"
   zone         = "us-central1-a"
   tags         = ["tech"]
