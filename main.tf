@@ -32,3 +32,24 @@ resource "google_storage_bucket" "default" {
     enabled = true
   }
 }
+
+resource "google_storage_bucket" "static" {
+  project                     = "western-cascade-378410"
+  name                        = "edm-dareit-static-final"
+  location                    = "US"
+  storage_class               = "STANDARD"
+  uniform_bucket_level_access = true
+}
+
+resource "google_storage_bucket_iam_member" "member" {
+  provider = google-beta
+  bucket   = "edm-dareit-static-final"
+  role     = "roles/storage.objectViewer"
+  member   = "allUsers"
+}
+
+resource "google_storage_bucket_object" "default" {
+  name   = "index.html"
+  source = "website/index.html"
+  bucket = "edm-dareit-static-final"
+}
